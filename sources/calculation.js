@@ -101,6 +101,7 @@ class Point {
         this.select = false;
         this.x = x;
         this.y = y;
+        this.t = 0;
         this.setRect();
     }
     setPoint(x, y) {
@@ -357,7 +358,11 @@ const Data = {
         let pt;
         let t, x, y, dt, omega;
 
-        // пюяявхрюрэ гмювемхе оюпюлерпхвеяйху йннпдхмюр йнмрпнкэмшу рнвей
+        for (i = 0; i < this.pointsCtr.length; ++i)
+            this.pointsCtr[i].t = i / (this.pointsCtr.length - 1);
+        dt = this.pointsCtr[1].t - this.pointsCtr[0].t;
+
+        // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫
         //if (this.uniform.checked)
         //this.pointsCtr[i].t = ;
         //if (this.chordal.checked)
@@ -368,8 +373,17 @@ const Data = {
         const N = this.countSplinePoints.value;
         this.pointsSpline = new Array(N);
 
-        // пюявер йннпдхмюр рнвйх яокюимю
 
+        // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫
+        for (i = 0; i < this.pointsCtr.length - 1; ++i) {
+            for (j = 0; j < N; ++j) {
+                omega = (j / (N - 1));
+				// alert(omega);
+                pt = new Point(this.pointsCtr[i].x * (1. - omega) + this.pointsCtr[i + 1].x * omega,
+                            this.pointsCtr[i].y * (1. - omega) + this.pointsCtr[i + 1].y * omega);
+                this.pointsSpline[i * N + j] = pt;
+            }
+        }
         //pt = new Point(x, y);
         //this.pointsSpline[j]=pt;
 
